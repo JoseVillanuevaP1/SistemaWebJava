@@ -313,7 +313,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 
             } else {
                 
-                JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrecta");
+                JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrecta");
                 
             }
             
