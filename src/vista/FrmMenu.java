@@ -4,15 +4,23 @@ package vista;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.JDesktopPane;
 
 public class FrmMenu extends javax.swing.JFrame {
 
+    
+    public static JDesktopPane jDesktopPane_menu;
+    
     public FrmMenu() {
         initComponents();
         this.setSize(new Dimension(1225,700));
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Ventas");
+        
+        this.setLayout(null);
+        jDesktopPane_menu = new JDesktopPane();
+        
     }
 
     @Override
@@ -65,11 +73,6 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_nuevo_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-cliente.png"))); // NOI18N
         jMenuItem_nuevo_usuario.setText("Nuevo Usuario");
         jMenuItem_nuevo_usuario.setPreferredSize(new java.awt.Dimension(180, 30));
-        jMenuItem_nuevo_usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_nuevo_usuarioActionPerformed(evt);
-            }
-        });
         jMenu1.add(jMenuItem_nuevo_usuario);
 
         jMenuItem_gestionar_usuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -120,11 +123,6 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_gestionar_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cliente.png"))); // NOI18N
         jMenuItem_gestionar_cliente.setText("Gestionar cliente");
         jMenuItem_gestionar_cliente.setPreferredSize(new java.awt.Dimension(180, 30));
-        jMenuItem_gestionar_cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_gestionar_clienteActionPerformed(evt);
-            }
-        });
         jMenu3.add(jMenuItem_gestionar_cliente);
 
         jMenuBar1.add(jMenu3);
@@ -143,7 +141,6 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_gestionar_categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jMenuItem_gestionar_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categorias.png"))); // NOI18N
         jMenuItem_gestionar_categoria.setText("Gestionar Categorias");
-        jMenuItem_gestionar_categoria.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu4.add(jMenuItem_gestionar_categoria);
 
         jMenuBar1.add(jMenu4);
@@ -182,11 +179,6 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_reportes_categorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reporte1.png"))); // NOI18N
         jMenuItem_reportes_categorias.setText("Reportes Categorias");
         jMenuItem_reportes_categorias.setPreferredSize(new java.awt.Dimension(200, 30));
-        jMenuItem_reportes_categorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_reportes_categoriasActionPerformed(evt);
-            }
-        });
         jMenu6.add(jMenuItem_reportes_categorias);
 
         jMenuItem_reportes_productos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -233,18 +225,6 @@ public class FrmMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem_nuevo_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nuevo_usuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem_nuevo_usuarioActionPerformed
-
-    private void jMenuItem_gestionar_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_clienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem_gestionar_clienteActionPerformed
-
-    private void jMenuItem_reportes_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_categoriasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem_reportes_categoriasActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

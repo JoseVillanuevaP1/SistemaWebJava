@@ -125,11 +125,6 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel5.setText("jLabel5");
 
         txt_usuario.setBackground(new java.awt.Color(255, 255, 255));
-        txt_usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_usuarioActionPerformed(evt);
-            }
-        });
         txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_usuarioKeyPressed(evt);
@@ -137,11 +132,6 @@ public class FrmLogin extends javax.swing.JFrame {
         });
 
         txt_password.setBackground(new java.awt.Color(255, 255, 255));
-        txt_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passwordActionPerformed(evt);
-            }
-        });
         txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_passwordKeyPressed(evt);
@@ -223,17 +213,9 @@ public class FrmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_usuarioActionPerformed
-
     private void jButton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IniciarSesionActionPerformed
         this.Login();
     }//GEN-LAST:event_jButton_IniciarSesionActionPerformed
-
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
 
     private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
@@ -323,5 +305,4 @@ public class FrmLogin extends javax.swing.JFrame {
             
         }
     }
-    
 }

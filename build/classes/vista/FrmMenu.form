@@ -31,9 +31,6 @@
                   <Dimension value="[180, 30]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_nuevo_usuarioActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_gestionar_usuario">
               <Properties>
@@ -150,9 +147,6 @@
                   <Dimension value="[180, 30]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_gestionar_clienteActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -193,9 +187,6 @@
                   <Image iconType="3" name="/img/categorias.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gestionar Categorias"/>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[200, 30]"/>
-                </Property>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -285,9 +276,6 @@
                   <Dimension value="[200, 30]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_reportes_categoriasActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_reportes_productos">
               <Properties>
