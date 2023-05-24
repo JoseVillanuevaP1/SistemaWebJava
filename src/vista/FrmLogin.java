@@ -124,14 +124,14 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/password.png"))); // NOI18N
         jLabel5.setText("jLabel5");
 
-        txt_usuario.setBackground(new java.awt.Color(255, 255, 255));
+        txt_usuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_usuarioKeyPressed(evt);
             }
         });
 
-        txt_password.setBackground(new java.awt.Color(255, 255, 255));
+        txt_password.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_passwordKeyPressed(evt);

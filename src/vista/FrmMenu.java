@@ -1,4 +1,3 @@
-
 package vista;
 
 import java.awt.Dimension;
@@ -7,24 +6,27 @@ import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
 
 public class FrmMenu extends javax.swing.JFrame {
-
     
     public static JDesktopPane jDesktopPane_menu;
     
     public FrmMenu() {
         initComponents();
-        this.setSize(new Dimension(1225,700));
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setSize(new Dimension(1225, 700));
+        this.setExtendedState(FrmMenu.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Ventas");
         
         this.setLayout(null);
         jDesktopPane_menu = new JDesktopPane();
         
+        int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        FrmMenu.jDesktopPane_menu.setBounds(0, 0, ancho, (alto - 110));
+        this.add(jDesktopPane_menu);
     }
-
+    
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("img/ventas.png"));
         return retValue;
     }
@@ -136,6 +138,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_nueva_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
         jMenuItem_nueva_categoria.setText("Nueva Categoria");
         jMenuItem_nueva_categoria.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_nueva_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_nueva_categoriaActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem_nueva_categoria);
 
         jMenuItem_gestionar_categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -226,6 +233,12 @@ public class FrmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem_nueva_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nueva_categoriaActionPerformed
+        InterCategoria interCategoria = new InterCategoria();
+        jDesktopPane_menu.add(interCategoria);
+        interCategoria.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_nueva_categoriaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -252,6 +265,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FrmMenu().setVisible(true);
             }

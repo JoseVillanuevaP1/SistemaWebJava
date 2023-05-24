@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Netbeans%20Proyects/SistemadeVentas/src/controlador/Ctrl_Usuario.java</file>
+            <file>file:/D:/Netbeans%20Proyects/SistemadeVentas/src/controlador/Ctrl_Categoria.java</file>
+            <file>file:/D:/Netbeans%20Proyects/SistemadeVentas/src/modelo/Categoria.java</file>
             <file>file:/D:/Netbeans%20Proyects/SistemadeVentas/src/vista/FrmLogin.java</file>
+            <file>file:/D:/Netbeans%20Proyects/SistemadeVentas/src/vista/InterCategoria.java</file>
             <file>file:/D:/Netbeans%20Proyects/SistemadeVentas/src/vista/FrmMenu.java</file>
         </group>
     </open-files>
