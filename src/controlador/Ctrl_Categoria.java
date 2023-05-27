@@ -51,5 +51,49 @@ public class Ctrl_Categoria {
         return respuesta;
     }   
     
-    
+    //metodo actualizar
+    public static boolean actualizar(Categoria objeto, int idCategoria){
+        boolean respuesta = false;
+        Connection cn = conexion.Conexion.conectar();
+        
+        try {
+            PreparedStatement consulta = cn.prepareStatement("update tb_categoria set descripcion=? where idCategoria = '" + idCategoria + "'");   
+            consulta.setString(1, objeto.getDescription());
+            
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+            
+            cn.close();
+        } catch (SQLException e) {
+            
+            System.out.println("Error al actualizar categoria: " + e);
+            
+        }
+        return respuesta;
+    }   
+
+        
+    //metodo eliminar categoria
+    public static boolean eliminar(int idCategoria){
+        boolean respuesta = false;
+        Connection cn = conexion.Conexion.conectar();
+        
+        try {
+            PreparedStatement consulta = cn.prepareStatement(
+                    "delete from tb_categoria where idCategoria = '" + idCategoria + "'");   
+            
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+            
+            cn.close();
+        } catch (SQLException e) {
+            
+            System.out.println("Error al eliminar categoria: " + e);
+            
+        }
+            
+        return respuesta;
+    }   
 }
