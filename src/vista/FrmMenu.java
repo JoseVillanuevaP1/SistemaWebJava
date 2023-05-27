@@ -148,6 +148,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_gestionar_categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jMenuItem_gestionar_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categorias.png"))); // NOI18N
         jMenuItem_gestionar_categoria.setText("Gestionar Categorias");
+        jMenuItem_gestionar_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_categoriaActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem_gestionar_categoria);
 
         jMenuBar1.add(jMenu4);
@@ -238,6 +243,12 @@ public class FrmMenu extends javax.swing.JFrame {
         jDesktopPane_menu.add(interCategoria);
         interCategoria.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nueva_categoriaActionPerformed
+
+    private void jMenuItem_gestionar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_categoriaActionPerformed
+        InterGestionarCategoria gestionarCategoria = new InterGestionarCategoria();
+        jDesktopPane_menu.add(gestionarCategoria);
+        gestionarCategoria.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_categoriaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
