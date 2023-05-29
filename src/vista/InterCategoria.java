@@ -26,7 +26,6 @@ public class InterCategoria extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setResizable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -40,6 +39,11 @@ public class InterCategoria extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
         txt_descripcion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txt_descripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_descripcionKeyPressed(evt);
+            }
+        });
         getContentPane().add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 170, -1));
 
         jButton1.setBackground(new java.awt.Color(0, 204, 204));
@@ -59,9 +63,26 @@ public class InterCategoria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.registrar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txt_descripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descripcionKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+           this.registrar();
+        }
+    }//GEN-LAST:event_txt_descripcionKeyPressed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel_wallpaper;
+    private javax.swing.JTextField txt_descripcion;
+    // End of variables declaration//GEN-END:variables
+
+    public void registrar(){
         Categoria categoria = new Categoria();
-        Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
-        
         //Validamos campos vacios
         if (txt_descripcion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
@@ -83,15 +104,6 @@ public class InterCategoria extends javax.swing.JInternalFrame {
         
         //limpiar campo
         txt_descripcion.setText("");
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel_wallpaper;
-    private javax.swing.JTextField txt_descripcion;
-    // End of variables declaration//GEN-END:variables
 }
