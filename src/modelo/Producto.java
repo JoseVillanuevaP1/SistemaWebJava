@@ -8,7 +8,7 @@ public class Producto {
     private int cantidad;
     private double precio;
     private String descripcion;
-    private int iva;
+    private int Igv;
     private int idCategoria;
     private int estado;
     
@@ -20,7 +20,7 @@ public class Producto {
         this.cantidad = 0;
         this.precio = 0.0;
         this.descripcion = "";
-        this.iva = 0;
+        this.Igv = 0;
         this.idCategoria = 0;
         this.estado = 0;
     }
@@ -32,7 +32,7 @@ public class Producto {
         this.cantidad = cantidad;
         this.precio = precio;
         this.descripcion = descripcion;
-        this.iva = iva;
+        this.Igv = iva;
         this.idCategoria = idCategoria;
         this.estado = estado;
     }
@@ -77,12 +77,12 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public int getIva() {
-        return iva;
+    public int getIgv() {
+        return Igv;
     }
 
-    public void setIva(int iva) {
-        this.iva = iva;
+    public void setIgv(int igv) {
+        this.Igv = igv;
     }
 
     public int getIdCategoria() {

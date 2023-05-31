@@ -1,19 +1,27 @@
-
 package vista;
 
+import conexion.Conexion;
+import controlador.Ctrl_Producto;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import modelo.Producto;
 
 public class InterProducto extends javax.swing.JInternalFrame {
-
+    
     private int obtenerIdCategoriaCombo = 0;
     
     public InterProducto() {
         initComponents();
         this.setSize(new Dimension(400, 300));
         this.setTitle("Nuevo Producto");
-        
+        this.cargarComboCategoria();
+        jComboBox_iva.setEditable(false);
+        jComboBox_iva.setEnabled(false);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,7 +84,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("IVA:");
+        jLabel7.setText("IGV:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 90, -1));
 
         txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -96,7 +104,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
         getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 170, -1));
 
         jComboBox_iva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_iva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione IVA", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_iva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "18%" }));
         getContentPane().add(jComboBox_iva, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 170, -1));
 
         jButton_guardar.setBackground(new java.awt.Color(0, 204, 204));
@@ -116,7 +124,84 @@ public class InterProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
+        Producto producto = new Producto();
         
+        String IGV = "";
+        String categoria = "";
+        IGV = jComboBox_iva.getSelectedItem().toString().trim();
+        categoria = jComboBox_categoria.getSelectedItem().toString().trim();
+
+        //validar campos
+        if (txt_nombre.getText().equals("") || txt_cantidad.getText().equals("") || txt_precio.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos.");
+            txt_nombre.setBackground(Color.red);
+            txt_cantidad.setBackground(Color.red);
+            txt_precio.setBackground(Color.red);
+        } else {
+            //ver si el producto ya esta registrado
+            if (!Ctrl_Producto.existeProducto(txt_nombre.getText().trim())) {
+                
+                if (IGV.equalsIgnoreCase("Seleccione IVA")) {
+                    JOptionPane.showMessageDialog(null, "Seleccione IVA");
+                } else {
+                    if (categoria.equalsIgnoreCase("Seleccione Categoria")) {
+                        JOptionPane.showMessageDialog(null, "Seleccione Categoria");
+                    } else {
+                        
+                        try {
+                            producto.setNombre(txt_nombre.getText().trim());
+                            producto.setCantidad(Integer.parseInt(txt_cantidad.getText().trim()));
+                            double Precio = 0.0;
+                            String PrecioTXT = txt_precio.getText().trim();
+                            boolean aux = false;
+                            
+                            //Si el usuario ingresa "," como punto decimal
+                            for (int i = 0; i < PrecioTXT.length(); i++) {
+                                if (PrecioTXT.charAt(i) == ',') {
+                                    String precionuevo = PrecioTXT.replace(",", ".");
+                                    Precio = Double.parseDouble(precionuevo);
+                                    aux = true;
+                                }                           
+                            }
+                            
+                            //evaluar la condicion
+                            if (aux == true) {
+                                producto.setPrecio(Precio);
+                            } else {
+                                Precio = Double.parseDouble(PrecioTXT);
+                                producto.setPrecio(Precio);
+                            }
+                            
+                            producto.setDescripcion(txt_descripcion.getText().trim());
+                            //porcentaje IGV
+                            producto.setIgv(18);
+                            
+                            //idCategoria - cargarmetodo
+                            this.IdCategoria();
+                            producto.setIdCategoria(obtenerIdCategoriaCombo);
+                            producto.setEstado(1);
+                            
+                            if (Ctrl_Producto.guardar(producto)) {
+                                JOptionPane.showMessageDialog(null, "Registro Guardado");
+                                txt_nombre.setBackground(Color.green);
+                                txt_cantidad.setBackground(Color.green);
+                                txt_precio.setBackground(Color.green);
+                                txt_descripcion.setBackground(Color.green);
+                                this.cargarComboCategoria();
+                                this.Limpiar();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error al guardar");
+                            }
+                            
+                        } catch (HeadlessException | NumberFormatException e) {
+                            System.out.println("Error en : " + e);
+                        } 
+                    }
+                }                  
+            } else {
+                JOptionPane.showMessageDialog(null, "El producto ya existe en la base de datos.");
+            }          
+        }      
     }//GEN-LAST:event_jButton_guardarActionPerformed
 
 
@@ -139,5 +224,50 @@ public class InterProducto extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     
-
+    /*Metodo para limpiar campos*/
+    private void Limpiar(){
+        txt_nombre.setText("");
+        txt_cantidad.setText("");
+        txt_precio.setText("");
+        txt_descripcion.setText("");
+    }
+    
+    /*Metodo para Cargar las categorias*/
+    private void cargarComboCategoria() {
+        Connection cn = Conexion.conectar();
+        String sql = "Select * from tb_categoria";
+        Statement st;
+        
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            jComboBox_categoria.removeAllItems();
+            jComboBox_categoria.addItem("Seleccione Categoria");
+            while (rs.next()) {                
+                jComboBox_categoria.addItem(rs.getString("descripcion"));
+            }
+            cn.close();
+            
+        } catch (SQLException e) {
+            System.out.println("Error al cargar Combo Categoria : " + e);
+        }
+    }
+    
+    //metodo para obtener IdCategoria
+    private int IdCategoria(){
+        String sql = "select * from tb_categoria where descripcion = '" + this.jComboBox_categoria.getSelectedItem() + "'";
+        Statement st;
+        try {
+            Connection cn = Conexion.conectar();
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                obtenerIdCategoriaCombo = rs.getInt("idCategoria");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener Id Categoria : " + e);
+        }
+        return obtenerIdCategoriaCombo;
+    }
+        
 }

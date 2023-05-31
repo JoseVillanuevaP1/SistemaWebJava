@@ -22,7 +22,7 @@ public class Ctrl_Producto {
             consulta.setInt(3, objeto.getCantidad());
             consulta.setDouble(4, objeto.getPrecio());
             consulta.setString(5, objeto.getDescripcion());
-            consulta.setInt(6, objeto.getIva());
+            consulta.setInt(6, objeto.getIgv());
             consulta.setInt(7, objeto.getIdCategoria());
             consulta.setInt(8, objeto.getEstado());
 
