@@ -56,4 +56,55 @@ public class Ctrl_Producto {
 
         return respuesta;
     }
+
+    //metodo actualizar producto
+    public static boolean actualizar(Producto objeto, int idProducto) {
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+
+        try {
+            PreparedStatement consulta = cn.prepareStatement("update tb_producto set nombre=?, cantidad=?, precio=?, descripcion=?, porcentajeIva=?, idCategoria=?, estado=? where idProducto = '" + idProducto + "'");
+            consulta.setString(1, objeto.getNombre());
+            consulta.setInt(2, objeto.getCantidad());
+            consulta.setDouble(3, objeto.getPrecio());
+            consulta.setString(4, objeto.getDescripcion());
+            consulta.setInt(5, objeto.getIgv());
+            consulta.setInt(6, objeto.getIdCategoria());
+            consulta.setInt(7, objeto.getEstado());
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+
+            System.out.println("Error al actualizar producto: " + e);
+
+        }
+        return respuesta;
+    }
+
+    //metodo eliminar producto
+    public static boolean eliminar(int idProducto) {
+        boolean respuesta = false;
+        Connection cn = conexion.Conexion.conectar();
+
+        try {
+            PreparedStatement consulta = cn.prepareStatement(
+                    "delete from tb_producto where idProducto = '" + idProducto + "'");
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+
+            System.out.println("Error al eliminar producto: " + e);
+
+        }
+
+        return respuesta;
+    }
 }

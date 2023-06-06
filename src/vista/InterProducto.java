@@ -18,8 +18,6 @@ public class InterProducto extends javax.swing.JInternalFrame {
         this.setSize(new Dimension(400, 300));
         this.setTitle("Nuevo Producto");
         this.cargarComboCategoria();
-        jComboBox_iva.setEditable(false);
-        jComboBox_iva.setEnabled(false);
     }
     
     @SuppressWarnings("unchecked")
@@ -104,7 +102,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
         getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 170, -1));
 
         jComboBox_iva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_iva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "18%" }));
+        jComboBox_iva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione IGV", "No tiene IGV", "18%" }));
         getContentPane().add(jComboBox_iva, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 170, -1));
 
         jButton_guardar.setBackground(new java.awt.Color(0, 204, 204));
@@ -141,8 +139,8 @@ public class InterProducto extends javax.swing.JInternalFrame {
             //ver si el producto ya esta registrado
             if (!Ctrl_Producto.existeProducto(txt_nombre.getText().trim())) {
                 
-                if (IGV.equalsIgnoreCase("Seleccione IVA")) {
-                    JOptionPane.showMessageDialog(null, "Seleccione IVA");
+                if (IGV.equalsIgnoreCase("Seleccione IGV")) {
+                    JOptionPane.showMessageDialog(null, "Seleccione IGV");
                 } else {
                     if (categoria.equalsIgnoreCase("Seleccione Categoria")) {
                         JOptionPane.showMessageDialog(null, "Seleccione Categoria");
@@ -174,7 +172,11 @@ public class InterProducto extends javax.swing.JInternalFrame {
                             
                             producto.setDescripcion(txt_descripcion.getText().trim());
                             //porcentaje IGV
-                            producto.setIgv(18);
+                            if (IGV.equalsIgnoreCase("No tiene IGV")) {
+                                producto.setIgv(0);
+                            } else if(IGV.equalsIgnoreCase("18%")){
+                                producto.setIgv(18);    
+                            }
                             
                             //idCategoria - cargarmetodo
                             this.IdCategoria();
@@ -187,6 +189,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
                                 txt_cantidad.setBackground(Color.green);
                                 txt_precio.setBackground(Color.green);
                                 txt_descripcion.setBackground(Color.green);
+                                jComboBox_iva.setSelectedItem("Seleccione IGV");
                                 this.cargarComboCategoria();
                                 this.Limpiar();
                             } else {
