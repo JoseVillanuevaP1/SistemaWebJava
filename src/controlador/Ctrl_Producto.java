@@ -107,4 +107,26 @@ public class Ctrl_Producto {
 
         return respuesta;
     }
+
+    //Metodo para Actualizar Stock del Producto
+    public static boolean ActualizarStock(Producto producto, int idProducto) {
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+        try {
+            PreparedStatement consulta = cn.prepareStatement(
+                    "update tb_producto set cantidad=? where idProducto = '" + idProducto + "'");
+            consulta.setInt(1, producto.getCantidad());
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+
+            System.out.println("Error en Actualizar Stock : " + e);
+        }
+        return respuesta;
+    }
+
 }

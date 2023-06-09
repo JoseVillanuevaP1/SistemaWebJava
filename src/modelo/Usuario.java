@@ -8,7 +8,8 @@ public class Usuario {
     private String apellido;
     private String usuario;
     private String password;
-    private int telefono;
+    private String telefono;
+    private int estado;
 
     //constructor
     public Usuario() {
@@ -17,7 +18,8 @@ public class Usuario {
         this.apellido = "";
         this.usuario = "";
         this.password = "";
-        this.telefono = 0;
+        this.telefono = "";
+        this.estado = 0;
     }
 
     //set ang getter
@@ -61,12 +63,20 @@ public class Usuario {
         this.password = password;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
 }
