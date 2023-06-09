@@ -1,16 +1,19 @@
 package vista;
 
+import controlador.Ctrl_Cliente;
+import java.awt.Color;
 import java.awt.Dimension;
-
+import javax.swing.JOptionPane;
+import modelo.Cliente;
 
 public class InterCliente extends javax.swing.JInternalFrame {
-     
+
     public InterCliente() {
         initComponents();
         this.setSize(new Dimension(400, 300));
         this.setTitle("Nuevo Cliente");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,7 +50,7 @@ public class InterCliente extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("DNI:");
+        jLabel3.setText("Documento:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 90, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -78,10 +81,10 @@ public class InterCliente extends javax.swing.JInternalFrame {
         getContentPane().add(txt_dni, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 170, -1));
 
         txt_telefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 170, -1));
+        getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
 
         txt_direccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txt_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
+        getContentPane().add(txt_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 170, -1));
 
         jButton_guardar.setBackground(new java.awt.Color(0, 204, 204));
         jButton_guardar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -100,7 +103,52 @@ public class InterCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
-        
+        Cliente cliente = new Cliente();
+
+        if (!txt_nombre.getText().isEmpty() && !txt_apellido.getText().isEmpty() && !txt_dni.getText().isEmpty()) {
+
+            if (!Ctrl_Cliente.existeCliente(txt_dni.getText().trim())) {
+
+                cliente.setNombre(txt_nombre.getText().trim());
+                cliente.setApellido(txt_apellido.getText().trim());
+                cliente.setTelefono(txt_telefono.getText().trim());
+                cliente.setDireccion(txt_direccion.getText().trim());
+                cliente.setEstado(1);
+
+                if (txt_dni.getText().trim().length() == 8 || txt_dni.getText().trim().length() == 9) {
+
+                    cliente.setDni(txt_dni.getText().trim());
+
+                    if (Ctrl_Cliente.guardar(cliente)) {
+                        JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                        txt_nombre.setBackground(Color.green);
+                        txt_apellido.setBackground(Color.green);
+                        txt_dni.setBackground(Color.green);
+                        Limpiar();
+                        
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al guardar Cliente");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Documento debe tener 8 digitos");
+                }
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "El usuario esta registrado en la Base de Datos");
+                txt_nombre.setBackground(Color.white);
+                txt_apellido.setBackground(Color.white);
+                txt_dni.setBackground(Color.white);
+
+            }
+            Limpiar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos por favor");
+            txt_nombre.setBackground(Color.red);
+            txt_apellido.setBackground(Color.red);
+            txt_dni.setBackground(Color.red);
+        }
     }//GEN-LAST:event_jButton_guardarActionPerformed
 
 
@@ -120,15 +168,13 @@ public class InterCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 
-    
     /*Metodo para limpiar campos*/
-    private void Limpiar(){
+    private void Limpiar() {
         txt_nombre.setText("");
         txt_apellido.setText("");
         txt_dni.setText("");
         txt_telefono.setText("");
         txt_direccion.setText("");
     }
-    
-        
+
 }

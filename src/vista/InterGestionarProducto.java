@@ -153,6 +153,8 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, 90, -1));
 
         txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_cantidad.setDragEnabled(true);
+        txt_cantidad.setEnabled(false);
         jPanel3.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
 
         txt_precio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
