@@ -3,7 +3,6 @@ package vista;
 import conexion.Conexion;
 import controlador.Ctrl_Cliente;
 import java.awt.Dimension;
-import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
@@ -179,6 +178,7 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Datos del Cliente Actualizados");
                     this.CargarTablaClientes();
                     this.limpiar();
+                    idCliente = 0;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al actualizar");
 
@@ -201,7 +201,7 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Cliente eliminado");
                 this.CargarTablaClientes();
                 this.limpiar();
-
+                idCliente = 0;
             } else {
                 JOptionPane.showMessageDialog(null, "SError al eliminar cliente");
                 this.limpiar();

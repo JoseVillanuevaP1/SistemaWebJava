@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 
 public class Ctrl_Usuario {
 
-     //Metodo para guardar nuevo cliente
+    //Metodo para guardar nuevo cliente
     public static boolean guardar(Usuario objeto) {
         boolean respuesta = false;
         Connection cn = conexion.Conexion.conectar();
@@ -55,8 +55,8 @@ public class Ctrl_Usuario {
         }
 
         return respuesta;
-    }   
-    
+    }
+
     //metodo para iniciar sesion
     public boolean loginUser(Usuario objeto) {
 
@@ -83,5 +83,54 @@ public class Ctrl_Usuario {
         return respuesta;
 
     }
-    
+
+    //metodo actualizar producto
+    public static boolean actualizar(Usuario objeto, int idUsuario) {
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+
+        try {
+            PreparedStatement consulta = cn.prepareStatement("update tb_usuario set nombre=?, apellido=?, usuario=?, password=?, telefono=?, estado=? where idUsuario = '" + idUsuario + "'");
+            consulta.setString(1, objeto.getNombre());
+            consulta.setString(2, objeto.getApellido());
+            consulta.setString(3, objeto.getUsuario());
+            consulta.setString(4, objeto.getPassword());
+            consulta.setString(5, objeto.getTelefono());
+            consulta.setInt(6, objeto.getEstado());
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+
+            System.out.println("Error al actualizar Usuario: " + e);
+
+        }
+        return respuesta;
+    }
+
+    //metodo eliminar producto
+    public static boolean eliminar(int idUsuario) {
+        boolean respuesta = false;
+        Connection cn = conexion.Conexion.conectar();
+
+        try {
+            PreparedStatement consulta = cn.prepareStatement(
+                    "delete from tb_usuario where idUsuario = '" + idUsuario + "'");
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+
+            System.out.println("Error al eliminar Usuario: " + e);
+
+        }
+
+        return respuesta;
+    }
 }

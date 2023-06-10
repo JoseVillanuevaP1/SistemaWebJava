@@ -1,7 +1,7 @@
 package vista;
 
 import conexion.Conexion;
-import controlador.Ctrl_Cliente;
+import controlador.Ctrl_Usuario;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.Cliente;
+import modelo.Usuario;
 
 public class InterGestionarUsuario extends javax.swing.JInternalFrame {
 
@@ -162,47 +162,50 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
 
-        if (!txt_nombre.getText().isEmpty() && !txt_apellido.getText().isEmpty() && !txt_usuario.getText().isEmpty()) {
+        if (idUsuario == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario");
+        } else {
+            if (!txt_nombre.getText().isEmpty() && !txt_apellido.getText().isEmpty() && !txt_usuario.getText().isEmpty() && !txt_password.getText().isEmpty()) {
 
-            Cliente cliente = new Cliente();
-            cliente.setNombre(txt_nombre.getText().trim());
-            cliente.setApellido(txt_apellido.getText().trim());
-            cliente.setTelefono(txt_password.getText().trim());
-            cliente.setDireccion(txt_telefono.getText().trim());
+                Usuario usuario = new Usuario();
+                usuario.setNombre(txt_nombre.getText().trim());
+                usuario.setApellido(txt_apellido.getText().trim());
+                usuario.setUsuario(txt_usuario.getText().trim());
+                usuario.setPassword(txt_password.getText().trim());
+                usuario.setTelefono(txt_telefono.getText().trim());
+                usuario.setEstado(1);
 
-            if (txt_usuario.getText().trim().length() == 8 || txt_usuario.getText().trim().length() == 9) {
-
-                cliente.setDni(txt_usuario.getText().trim());
-
-                if (Ctrl_Cliente.actualizar(cliente, idUsuario)) {
-                    JOptionPane.showMessageDialog(null, "Datos del Cliente Actualizados");
-                    this.CargarTablaUsuarios();
+                if (Ctrl_Usuario.actualizar(usuario, idUsuario)) {
+                    JOptionPane.showMessageDialog(null, "Actualizacion exitosa");
                     this.limpiar();
+                    this.CargarTablaUsuarios();
+                    idUsuario = 0;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al actualizar");
-
+                    
+                    JOptionPane.showMessageDialog(null, "Error al Actualizar");
+                    
                 }
+                
             } else {
-                JOptionPane.showMessageDialog(null, "El documento debe tener 8 o 9 digitos");
+                JOptionPane.showMessageDialog(null, "Completa todos los campos");
             }
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Completa todos los campos");
         }
+
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         if (idUsuario == 0) {
-            JOptionPane.showMessageDialog(null, "Selecciona un cliente");
+            JOptionPane.showMessageDialog(null, "Selecciona un Usuario");
         } else {
 
-            if (Ctrl_Cliente.eliminar(idUsuario)) {
+            if (Ctrl_Usuario.eliminar(idUsuario)) {
                 JOptionPane.showMessageDialog(null, "Cliente eliminado");
                 this.CargarTablaUsuarios();
                 this.limpiar();
-
+                idUsuario = 0;
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar cliente");
+                JOptionPane.showMessageDialog(null, "Error al eliminar usuario");
                 this.limpiar();
             }
 

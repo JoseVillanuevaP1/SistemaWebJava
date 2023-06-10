@@ -191,70 +191,76 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         categoria = jComboBox_categoria.getSelectedItem().toString().trim();
 
         //validar campos
-        if (txt_nombre.getText().isEmpty() || txt_cantidad.getText().isEmpty() || txt_precio.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos.");
+        if (idProducto == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un producto");
         } else {
-            if (IGV.equalsIgnoreCase("Seleccione IGV")) {
-                JOptionPane.showMessageDialog(null, "Seleccione IGV");
-
+            if (txt_nombre.getText().isEmpty() || txt_cantidad.getText().isEmpty() || txt_precio.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Complete todos los campos.");
             } else {
-                if (categoria.equalsIgnoreCase("Seleccione Categoria")) {
-                    JOptionPane.showMessageDialog(null, "Seleccione Categoria");
+                if (IGV.equalsIgnoreCase("Seleccione IGV")) {
+                    JOptionPane.showMessageDialog(null, "Seleccione IGV");
+
                 } else {
+                    if (categoria.equalsIgnoreCase("Seleccione Categoria")) {
+                        JOptionPane.showMessageDialog(null, "Seleccione Categoria");
+                    } else {
 
-                    try {
-                        producto.setNombre(txt_nombre.getText().trim());
-                        producto.setCantidad(Integer.parseInt(txt_cantidad.getText().trim()));
-                        double Precio = 0.0;
-                        String PrecioTXT = txt_precio.getText().trim();
-                        boolean aux = false;
+                        try {
+                            producto.setNombre(txt_nombre.getText().trim());
+                            producto.setCantidad(Integer.parseInt(txt_cantidad.getText().trim()));
+                            double Precio = 0.0;
+                            String PrecioTXT = txt_precio.getText().trim();
+                            boolean aux = false;
 
-                        //Si el usuario ingresa "," como punto decimal
-                        for (int i = 0; i < PrecioTXT.length(); i++) {
-                            if (PrecioTXT.charAt(i) == ',') {
-                                String precionuevo = PrecioTXT.replace(",", ".");
-                                Precio = Double.parseDouble(precionuevo);
-                                aux = true;
+                            //Si el usuario ingresa "," como punto decimal
+                            for (int i = 0; i < PrecioTXT.length(); i++) {
+                                if (PrecioTXT.charAt(i) == ',') {
+                                    String precionuevo = PrecioTXT.replace(",", ".");
+                                    Precio = Double.parseDouble(precionuevo);
+                                    aux = true;
+                                }
                             }
+
+                            //evaluar la condicion
+                            if (aux == true) {
+                                producto.setPrecio(Precio);
+                            } else {
+                                Precio = Double.parseDouble(PrecioTXT);
+                                producto.setPrecio(Precio);
+                            }
+
+                            producto.setDescripcion(txt_descripcion.getText().trim());
+                            //porcentaje IGV
+                            if (IGV.equalsIgnoreCase("No tiene IGV")) {
+                                producto.setIgv(0);
+                            } else if (IGV.equalsIgnoreCase("18%")) {
+                                producto.setIgv(18);
+                            }
+
+                            //idCategoria - cargarmetodo
+                            this.IdCategoria();
+                            producto.setIdCategoria(obtenerIdCategoria);
+                            producto.setEstado(1);
+
+                            if (Ctrl_Producto.actualizar(producto, idProducto)) {
+                                JOptionPane.showMessageDialog(null, "Registro Actualizado");
+                                this.CargarComboCategoria();
+                                this.CargarTablaProducto();
+                                jComboBox_iva.setSelectedItem("Seleccione IGV");
+                                this.limpiar();
+                                idProducto = 0;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error al Actualizar");
+                            }
+
+                        } catch (HeadlessException | NumberFormatException e) {
+                            System.out.println("Error en : " + e);
                         }
-
-                        //evaluar la condicion
-                        if (aux == true) {
-                            producto.setPrecio(Precio);
-                        } else {
-                            Precio = Double.parseDouble(PrecioTXT);
-                            producto.setPrecio(Precio);
-                        }
-
-                        producto.setDescripcion(txt_descripcion.getText().trim());
-                        //porcentaje IGV
-                        if (IGV.equalsIgnoreCase("No tiene IGV")) {
-                            producto.setIgv(0);
-                        } else if (IGV.equalsIgnoreCase("18%")) {
-                            producto.setIgv(18);
-                        }
-
-                        //idCategoria - cargarmetodo
-                        this.IdCategoria();
-                        producto.setIdCategoria(obtenerIdCategoria);
-                        producto.setEstado(1);
-
-                        if (Ctrl_Producto.actualizar(producto, idProducto)) {
-                            JOptionPane.showMessageDialog(null, "Registro Actualizado");
-                            this.CargarComboCategoria();
-                            this.CargarTablaProducto();
-                            jComboBox_iva.setSelectedItem("Seleccione IGV");
-                            this.limpiar();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Error al Actualizar");
-                        }
-
-                    } catch (HeadlessException | NumberFormatException e) {
-                        System.out.println("Error en : " + e);
                     }
                 }
             }
         }
+
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
@@ -266,6 +272,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
                 this.CargarTablaProducto();
                 this.CargarComboCategoria();
                 this.limpiar();
+                idProducto = 0;
             } else {
                 System.out.println("Error al eliminar Producto");
             }
