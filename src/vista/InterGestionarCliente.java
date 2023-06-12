@@ -15,7 +15,7 @@ import modelo.Cliente;
 
 public class InterGestionarCliente extends javax.swing.JInternalFrame {
 
-    private int idCliente;
+    private int idCliente = 0;
 
     public InterGestionarCliente() {
         initComponents();

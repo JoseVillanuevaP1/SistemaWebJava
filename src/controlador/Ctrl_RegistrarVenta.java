@@ -1,6 +1,7 @@
 
 package controlador;
 
+import conexion.Conexion;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -72,6 +73,30 @@ public class Ctrl_RegistrarVenta {
 
         } catch (SQLException e) {
             System.out.println("Error al guardar Detalle: " + e);
+        }
+        return respuesta;
+    }
+    
+        //metodo actualizar venta
+    public boolean actualizarVenta(CabeceraVenta objeto, int idCabeceraVenta) {
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+
+        try {
+            PreparedStatement consulta = cn.prepareStatement("update tb_cabecera_venta set idCliente=? , estado=? " 
+                    + "where idCabeceraVenta = '" + idCabeceraVenta + "'");
+            consulta.setInt(1, objeto.getIdCliente());
+            consulta.setInt(2, objeto.getEstado());
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+
+            System.out.println("Error al actualizar Venta: " + e);
+
         }
         return respuesta;
     }

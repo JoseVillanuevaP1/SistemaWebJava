@@ -214,6 +214,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_gestionar_ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/configuraciones.png"))); // NOI18N
         jMenuItem_gestionar_ventas.setText("Gestionar Ventas");
         jMenuItem_gestionar_ventas.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_gestionar_ventas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_ventasActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem_gestionar_ventas);
 
         jMenuBar1.add(jMenu5);
@@ -348,6 +353,12 @@ public class FrmMenu extends javax.swing.JFrame {
         jDesktopPane_menu.add(interFacturacion);
         interFacturacion.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nueva_ventaActionPerformed
+
+    private void jMenuItem_gestionar_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_ventasActionPerformed
+        InterGestionarVentas interGestionarVentas = new InterGestionarVentas();
+        jDesktopPane_menu.add(interGestionarVentas);
+        interGestionarVentas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_ventasActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
