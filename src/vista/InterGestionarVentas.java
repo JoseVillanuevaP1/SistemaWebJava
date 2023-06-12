@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.CabeceraVenta;
-import modelo.Producto;
 
 public class InterGestionarVentas extends javax.swing.JInternalFrame {
 

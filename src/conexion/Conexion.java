@@ -9,7 +9,7 @@ public class Conexion {
     public static Connection conectar() {
         try {
             
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_sistema_ventas?autoReconnect=true&useSSL=false", "root", "12345678");
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_sistema_ventas?autoReconnect=true&useSSL=false", "root", "1234");
             return cn;
         } catch (SQLException e) {
             System.out.println("Error en la conexion local " + e);

@@ -94,7 +94,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         modeloDatosProductos.addColumn("Accion");
 
         //agregar datos del modelo de la tabla
-        this.jTable_productos.setModel(modeloDatosProductos);
+        InterFacturacion.jTable_productos.setModel(modeloDatosProductos);
 
     }
 
