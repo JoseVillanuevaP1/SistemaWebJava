@@ -13,7 +13,7 @@ public class FrmMenu extends javax.swing.JFrame {
     public FrmMenu() {
         initComponents();
         this.setSize(new Dimension(1225, 700));
-        this.setExtendedState(FrmMenu.MAXIMIZED_BOTH);
+//        this.setExtendedState(FrmMenu.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Ventas");
 

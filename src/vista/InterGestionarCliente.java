@@ -246,7 +246,7 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
     private void CargarTablaClientes() {
         Connection con = Conexion.conectar();
         DefaultTableModel mode1 = new DefaultTableModel();
-        String sql = "select * from tb_cliente";
+        String sql = "select * from tb_cliente order by nombre";
         Statement st;
 
         try {

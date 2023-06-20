@@ -22,7 +22,7 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
     //constructor
     public InterGraficaVentas() {
         initComponents();
-        this.setSize(new Dimension(550, 650));
+        this.setSize(new Dimension(550, 600));
         this.setTitle("Historial de Ventas");
         this.MetodoContador();
         vector_fechaVenta = new String[cantidadResultados];

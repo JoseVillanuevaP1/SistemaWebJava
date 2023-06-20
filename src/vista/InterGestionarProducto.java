@@ -349,7 +349,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
     private void CargarTablaProducto() {
         Connection con = Conexion.conectar();
         DefaultTableModel mode1 = new DefaultTableModel();
-        String sql = "select p.idProducto, p.nombre, p.cantidad, p.precio, p.descripcion, p.porcentajeIva, c.descripcion, p.estado from tb_producto As p, tb_categoria As c where p.idCategoria = c.idCategoria;";
+        String sql = "select p.idProducto, p.nombre, p.cantidad, p.precio, p.descripcion, p.porcentajeIva, c.descripcion, p.estado from tb_producto As p, tb_categoria As c where p.idCategoria = c.idCategoria order by p.nombre asc;";
         Statement st;
 
         try {
