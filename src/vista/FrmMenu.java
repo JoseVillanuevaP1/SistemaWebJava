@@ -1,10 +1,12 @@
 package vista;
 
 import controlador.Reportes;
+import java.sql.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
+import modelo.Rol;
 
 public class FrmMenu extends javax.swing.JFrame {
 
@@ -12,18 +14,43 @@ public class FrmMenu extends javax.swing.JFrame {
 
     public FrmMenu() {
         initComponents();
-        this.setSize(new Dimension(1225, 700));
-//        this.setExtendedState(FrmMenu.MAXIMIZED_BOTH);
+        this.setSize(new Dimension(1225, 750));
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Ventas");
-
+        this.txt_rol.setText("Bienvenido, " + FrmLogin.rol);
         this.setLayout(null);
-        jDesktopPane_menu = new JDesktopPane();
 
+        Rol rol = this.obtenerPermisosRol(FrmLogin.rol);
+
+        if (rol.getUsuario() == 0) {
+            jMenu1.setEnabled(false);
+        }
+        if (rol.getProducto() == 0) {
+            jMenu2.setEnabled(false);
+        }
+        if (rol.getCliente() == 0) {
+            jMenu3.setEnabled(false);
+        }
+        if (rol.getCategoria() == 0) {
+            jMenu4.setEnabled(false);
+        }
+        if (rol.getFacturar() == 0) {
+            jMenu5.setEnabled(false);
+        }
+        if (rol.getReportes()== 0) {
+            jMenu6.setEnabled(false);
+        }
+        if (rol.getHistorial() == 0) {
+            jMenu7.setEnabled(false);
+        }
+
+        jDesktopPane_menu = new JDesktopPane();
+        jDesktopPane_menu.add(jPanel1);
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
         FrmMenu.jDesktopPane_menu.setBounds(0, 0, ancho, (alto - 110));
         this.add(jDesktopPane_menu);
+
     }
 
     @Override
@@ -36,10 +63,15 @@ public class FrmMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txt_rol = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem_nuevo_usuario = new javax.swing.JMenuItem();
+        jMenuItem_roles = new javax.swing.JMenuItem();
         jMenuItem_gestionar_usuario = new javax.swing.JMenuItem();
+        jMenuItem_gestionar_usuario1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem_nuevo_producto = new javax.swing.JMenuItem();
         jMenuItem_gestionar_producto = new javax.swing.JMenuItem();
@@ -65,7 +97,25 @@ public class FrmMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(245, 243, 243));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setEnabled(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ujier.png"))); // NOI18N
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 60));
+
+        txt_rol.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        txt_rol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_rol.setText("Bienvenido, Administrador");
+        jPanel1.add(txt_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 430, 60));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 600, 510, 60));
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         jMenu1.setText("Usuario");
@@ -83,6 +133,17 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem_nuevo_usuario);
 
+        jMenuItem_roles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenuItem_roles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
+        jMenuItem_roles.setText("Nuevo Rol");
+        jMenuItem_roles.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenuItem_roles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_rolesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_roles);
+
         jMenuItem_gestionar_usuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jMenuItem_gestionar_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/configuraciones.png"))); // NOI18N
         jMenuItem_gestionar_usuario.setText("Gestionar Usuarios");
@@ -93,6 +154,17 @@ public class FrmMenu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem_gestionar_usuario);
+
+        jMenuItem_gestionar_usuario1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenuItem_gestionar_usuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conf.png"))); // NOI18N
+        jMenuItem_gestionar_usuario1.setText("Gestionar Rol");
+        jMenuItem_gestionar_usuario1.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenuItem_gestionar_usuario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_usuario1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_gestionar_usuario1);
 
         jMenuBar1.add(jMenu1);
 
@@ -410,18 +482,21 @@ public class FrmMenu extends javax.swing.JFrame {
         interGrafica.setVisible(true);
     }//GEN-LAST:event_jMenuItem_ver_historialActionPerformed
 
-//    public static void main(String args[]) {
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new FrmMenu().setVisible(true);
-//            }
-//        });
-//    }
+    private void jMenuItem_rolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_rolesActionPerformed
+        InterRol interRol = new InterRol();
+        jDesktopPane_menu.add(interRol);
+        interRol.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_rolesActionPerformed
+
+    private void jMenuItem_gestionar_usuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_usuario1ActionPerformed
+        InterGestionarRol interGestionarRol = new InterGestionarRol();
+        jDesktopPane_menu.add(interGestionarRol);
+        interGestionarRol.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_usuario1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -437,6 +512,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_gestionar_cliente;
     private javax.swing.JMenuItem jMenuItem_gestionar_producto;
     private javax.swing.JMenuItem jMenuItem_gestionar_usuario;
+    private javax.swing.JMenuItem jMenuItem_gestionar_usuario1;
     private javax.swing.JMenuItem jMenuItem_gestionar_ventas;
     private javax.swing.JMenuItem jMenuItem_nueva_categoria;
     private javax.swing.JMenuItem jMenuItem_nueva_venta;
@@ -447,7 +523,43 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_reportes_clientes;
     private javax.swing.JMenuItem jMenuItem_reportes_productos;
     private javax.swing.JMenuItem jMenuItem_reportes_ventas;
+    private javax.swing.JMenuItem jMenuItem_roles;
     private javax.swing.JMenuItem jMenuItem_ver_historial;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel txt_rol;
     // End of variables declaration//GEN-END:variables
 
+    private Rol obtenerPermisosRol(String nombreRol) {
+
+        Rol rol = new Rol();
+
+        try {
+
+            Connection cn = conexion.Conexion.conectar();
+            String sql = "select * from Roles where nombre = '" + nombreRol + "';";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                rol.setUsuario(rs.getInt("usuario"));
+                rol.setProducto(rs.getInt("producto"));
+                rol.setCliente(rs.getInt("cliente"));
+                rol.setCategoria(rs.getInt("categoria"));
+                rol.setFacturar(rs.getInt("facturar"));
+                rol.setReportes(rs.getInt("reportes"));
+                rol.setHistorial(rs.getInt("historial"));
+
+            }
+
+            cn.close();
+            rs.close();
+
+        } catch (SQLException e) {
+
+            System.out.println("Error al obtener los permiso del rol, en :" + e);
+
+        }
+        return rol;
+    }
 }

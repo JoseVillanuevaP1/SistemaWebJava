@@ -17,7 +17,7 @@ public class Ctrl_Usuario {
         Connection cn = conexion.Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("insert into tb_usuario values(?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement("insert into tb_usuario values(?,?,?,?,?,?,?,?)");
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getNombre());
             consulta.setString(3, objeto.getApellido());
@@ -25,6 +25,7 @@ public class Ctrl_Usuario {
             consulta.setString(5, objeto.getPassword());
             consulta.setString(6, objeto.getTelefono());
             consulta.setInt(7, objeto.getEstado());
+            consulta.setInt(8, objeto.getIdRol());
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
@@ -90,13 +91,14 @@ public class Ctrl_Usuario {
         Connection cn = Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("update tb_usuario set nombre=?, apellido=?, usuario=?, password=?, telefono=?, estado=? where idUsuario = '" + idUsuario + "'");
+            PreparedStatement consulta = cn.prepareStatement("update tb_usuario set nombre=?, apellido=?, usuario=?, password=?, telefono=?, estado=?, idRol=? where idUsuario = '" + idUsuario + "'");
             consulta.setString(1, objeto.getNombre());
             consulta.setString(2, objeto.getApellido());
             consulta.setString(3, objeto.getUsuario());
             consulta.setString(4, objeto.getPassword());
             consulta.setString(5, objeto.getTelefono());
             consulta.setInt(6, objeto.getEstado());
+            consulta.setInt(7, objeto.getIdRol());
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;

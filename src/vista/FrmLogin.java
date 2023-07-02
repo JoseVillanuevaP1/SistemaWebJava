@@ -6,8 +6,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
+import java.sql.*;
 
 public class FrmLogin extends javax.swing.JFrame {
+    
+    public static String rol;
     
     public FrmLogin() {
         initComponents();
@@ -215,6 +218,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IniciarSesionActionPerformed
+        this.mandarRol();
         this.Login();
     }//GEN-LAST:event_jButton_IniciarSesionActionPerformed
 
@@ -226,7 +230,8 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
-           this.Login();
+            this.mandarRol();
+            this.Login();
         }
     }//GEN-LAST:event_txt_passwordKeyPressed
 
@@ -304,6 +309,33 @@ public class FrmLogin extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
             
+        }
+    }
+ 
+    private void mandarRol(){
+        if (!txt_usuario.getText().isEmpty() && !txt_password.getText().isEmpty()) {
+            
+            try {
+                Connection cn = conexion.Conexion.conectar();
+                String sql = "select u.nombre as usuario, r.nombre as rol from tb_usuario u, Roles r where u.idRol = r.idRol and u.usuario = '" + txt_usuario.getText().trim() + "' and u.password = '" + txt_password.getText().trim() + "';";
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                
+                while (rs.next()) {                    
+                    FrmLogin.rol = rs.getString("rol");
+                }
+                System.out.println(FrmLogin.rol);                
+                cn.close();
+                rs.close();
+                
+            } catch (SQLException e) {
+                
+                System.out.println("Error al mandar Rol, en : " + e);
+                
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
         }
     }
 }

@@ -1,20 +1,26 @@
 package vista;
 
+import conexion.Conexion;
 import controlador.Ctrl_Usuario;
 import java.awt.Dimension;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 
 public class InterUsuario extends javax.swing.JInternalFrame {
 
+    private int obtenerIdRol;
+
     public InterUsuario() {
         initComponents();
-        this.setSize(new Dimension(400, 300));
+        this.setSize(new Dimension(400, 325));
         this.setTitle("Nuevo Usuario");
-        
+        this.cargarComboRol();
         txt_password.setVisible(true);
         txt_password_visible.setVisible(false);
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -28,6 +34,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         txt_apellido = new javax.swing.JTextField();
         txt_usuario = new javax.swing.JTextField();
@@ -36,6 +43,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         jButton_guardar = new javax.swing.JButton();
         jCheckBox_ver_clave = new javax.swing.JCheckBox();
         txt_password_visible = new javax.swing.JTextField();
+        jComboBox_rol = new javax.swing.JComboBox<>();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
@@ -76,8 +84,14 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Teléfono:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 90, -1));
+        jLabel7.setText("Rol:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 90, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Teléfono:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 90, -1));
 
         txt_nombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 170, -1));
@@ -102,7 +116,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
                 jButton_guardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 90, 30));
+        getContentPane().add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 90, 30));
 
         jCheckBox_ver_clave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -112,8 +126,11 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         getContentPane().add(jCheckBox_ver_clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 141, -1, -1));
         getContentPane().add(txt_password_visible, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
 
+        jComboBox_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona Rol", "Administrador", "Gerente de Ventas", "Cajero" }));
+        getContentPane().add(jComboBox_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 170, -1));
+
         jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo3.jpg"))); // NOI18N
-        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 270));
+        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -126,25 +143,36 @@ public class InterUsuario extends javax.swing.JInternalFrame {
             Usuario usuario = new Usuario();
             if (!Ctrl_Usuario.existeUsuario(txt_usuario.getText().trim())) {
 
-                //Enviamos datos del usuario
-                usuario.setNombre(txt_nombre.getText().trim());
-                usuario.setApellido(txt_apellido.getText().trim());
-                usuario.setUsuario(txt_usuario.getText().trim());
-                usuario.setPassword(txt_password.getText().trim());
-                usuario.setTelefono(txt_telefono.getText().trim());
-                usuario.setEstado(1);
-
-                if (Ctrl_Usuario.guardar(usuario)) {
-                    JOptionPane.showMessageDialog(null, "Usuario Registrado.");
-
+                String rol = jComboBox_rol.getSelectedItem().toString();
+                if (rol.equals("Seleccione Rol")) {
+                    
+                    JOptionPane.showMessageDialog(null, "Selecciona Rol");
+                    
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al registrar Usuario.");
+                    //Enviamos datos del usuario
+                    usuario.setNombre(txt_nombre.getText().trim());
+                    usuario.setApellido(txt_apellido.getText().trim());
+                    usuario.setUsuario(txt_usuario.getText().trim());
+                    usuario.setPassword(txt_password.getText().trim());
+                    usuario.setTelefono(txt_telefono.getText().trim());
+                    
+                    //obtenemos el idRol
+                    this.idRol();
+                    usuario.setIdRol(obtenerIdRol);
+                    usuario.setEstado(1);
+
+                    if (Ctrl_Usuario.guardar(usuario)) {
+                        JOptionPane.showMessageDialog(null, "Usuario Registrado.");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al registrar Usuario.");
+                    }
                 }
 
             } else {
 
                 JOptionPane.showMessageDialog(null, "El usuario ya esta registrado en la Base de Datos. Ingrese otro");
-                
+
             }
 
             this.Limpiar();
@@ -187,12 +215,14 @@ public class InterUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_guardar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox_ver_clave;
+    private javax.swing.JComboBox<String> jComboBox_rol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel_wallpaper;
     private javax.swing.JTextField txt_apellido;
     private javax.swing.JTextField txt_nombre;
@@ -210,6 +240,44 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         txt_password.setText("");
         txt_password_visible.setText("");
         txt_telefono.setText("");
+    }
+
+    /*Metodo para Cargar las categorias*/
+    private void cargarComboRol() {
+        Connection cn = Conexion.conectar();
+        String sql = "Select * from Roles";
+        Statement st;
+
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            jComboBox_rol.removeAllItems();
+            jComboBox_rol.addItem("Seleccione Rol");
+            while (rs.next()) {
+                jComboBox_rol.addItem(rs.getString("nombre"));
+            }
+            cn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al cargar Combo Rol : " + e);
+        }
+    }
+
+    //metodo para obtener IdCategoria
+    private int idRol() {
+        String sql = "select * from Roles where nombre = '" + this.jComboBox_rol.getSelectedItem() + "'";
+        Statement st;
+        try {
+            Connection cn = Conexion.conectar();
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                obtenerIdRol = rs.getInt("idRol");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener Id Categoria : " + e);
+        }
+        return obtenerIdRol;
     }
 
 }

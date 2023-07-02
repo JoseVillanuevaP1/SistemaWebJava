@@ -10,6 +10,7 @@ public class Usuario {
     private String password;
     private String telefono;
     private int estado;
+    private int idRol;
 
     //constructor
     public Usuario() {
@@ -20,6 +21,14 @@ public class Usuario {
         this.password = "";
         this.telefono = "";
         this.estado = 0;
+    }
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
     //set ang getter

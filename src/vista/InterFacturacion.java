@@ -50,7 +50,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
     public InterFacturacion() {
         initComponents();
-        this.setSize(new Dimension(800, 600));
+        this.setSize(new Dimension(800, 565));
         this.setTitle("Facturacion");
 
         //cargar los clientes en el jcombobox
@@ -248,59 +248,58 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Subtotal:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 80, -1));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Descuento:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 80, -1));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 80, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("IGV:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 80, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 80, 20));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Total a pagar:");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, 20));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Efectivo:");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 80, -1));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 80, 20));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Cambio:");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 80, -1));
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 80, 20));
 
         txt_subtotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_subtotal.setEnabled(false);
-        jPanel3.add(txt_subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 120, -1));
+        jPanel3.add(txt_subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 120, -1));
 
         txt_descuento.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_descuento.setEnabled(false);
-        jPanel3.add(txt_descuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 120, -1));
+        jPanel3.add(txt_descuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 120, -1));
 
         txt_igv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_igv.setEnabled(false);
-        jPanel3.add(txt_igv, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 120, -1));
+        jPanel3.add(txt_igv, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 120, -1));
 
         txt_total_pagar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_total_pagar.setEnabled(false);
-        jPanel3.add(txt_total_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 120, -1));
+        jPanel3.add(txt_total_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 120, -1));
 
         txt_efectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel3.add(txt_efectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 145, 120, -1));
+        jPanel3.add(txt_efectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 120, -1));
 
         txt_cambio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_cambio.setEnabled(false);
-        jPanel3.add(txt_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 175, 120, -1));
+        jPanel3.add(txt_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 120, -1));
 
         jButton_calcularCambio.setBackground(new java.awt.Color(51, 255, 255));
         jButton_calcularCambio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton_calcularCambio.setForeground(new java.awt.Color(0, 0, 0));
         jButton_calcularCambio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salary.png"))); // NOI18N
         jButton_calcularCambio.setText("Calcular Cambio");
         jButton_calcularCambio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -312,11 +311,10 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         });
         jPanel3.add(jButton_calcularCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 150, 100));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 390, 210));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 390, 200));
 
         jButton_registrar_venta.setBackground(new java.awt.Color(51, 255, 255));
         jButton_registrar_venta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton_registrar_venta.setForeground(new java.awt.Color(0, 0, 0));
         jButton_registrar_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/printer (1).png"))); // NOI18N
         jButton_registrar_venta.setText("Registrar Venta");
         jButton_registrar_venta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
