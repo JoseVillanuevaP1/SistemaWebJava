@@ -16,7 +16,7 @@ public class Ctrl_Producto {
         Connection cn = conexion.Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("insert into tb_producto values(?,?,?,?,?,?,?,? )");
+            PreparedStatement consulta = cn.prepareStatement("insert into tb_producto values(?,?,?,?,?,?,?,?,?)");
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getNombre());
             consulta.setInt(3, objeto.getCantidad());
@@ -25,6 +25,7 @@ public class Ctrl_Producto {
             consulta.setInt(6, objeto.getIgv());
             consulta.setInt(7, objeto.getIdCategoria());
             consulta.setInt(8, objeto.getEstado());
+            consulta.setInt(9, objeto.getIdMarca());
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
@@ -63,7 +64,7 @@ public class Ctrl_Producto {
         Connection cn = Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("update tb_producto set nombre=?, cantidad=?, precio=?, descripcion=?, porcentajeIva=?, idCategoria=?, estado=? where idProducto = '" + idProducto + "'");
+            PreparedStatement consulta = cn.prepareStatement("update tb_producto set nombre=?, cantidad=?, precio=?, descripcion=?, porcentajeIva=?, idCategoria=?, estado=?, idMarca=? where idProducto = '" + idProducto + "'");
             consulta.setString(1, objeto.getNombre());
             consulta.setInt(2, objeto.getCantidad());
             consulta.setDouble(3, objeto.getPrecio());
@@ -71,6 +72,7 @@ public class Ctrl_Producto {
             consulta.setInt(5, objeto.getIgv());
             consulta.setInt(6, objeto.getIdCategoria());
             consulta.setInt(7, objeto.getEstado());
+            consulta.setInt(8, objeto.getIdMarca());
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;

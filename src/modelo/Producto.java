@@ -11,6 +11,15 @@ public class Producto {
     private int Igv;
     private int idCategoria;
     private int estado;
+    private int idMarca;
+
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
+    }
     
     //metodos
     //constructor

@@ -3,7 +3,6 @@ package vista;
 import conexion.Conexion;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
@@ -11,11 +10,7 @@ import java.sql.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author jose
- */
-public class InterGraficaVentas extends javax.swing.JInternalFrame {
+public class InterGraficaProductos extends javax.swing.JInternalFrame {
 
     ArrayList<Integer> listaCantidad = new ArrayList<>();
     ArrayList<String> listaFechas = new ArrayList<>();
@@ -24,10 +19,10 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
     int[] vector_estatus_cantidad;
 
     //constructor
-    public InterGraficaVentas() {
+    public InterGraficaProductos() {
         initComponents();
         this.setSize(new Dimension(550, 600));
-        this.setTitle("Historial de Ventas");
+        this.setTitle("Historial de Productos vendidos");
         this.MetodoContador();
         vector_fechaVenta = new String[cantidadResultados];
         vector_estatus_cantidad = new int[cantidadResultados];
@@ -46,9 +41,10 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
         try {
 
             Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement(""
-                    + "select fechaVenta, count(fechaVenta) as Ventas from tb_cabecera_venta "
-                    + "where fechaVenta BETWEEN '" + InterGrafica.fecha_inicio + "' and '" + InterGrafica.fecha_fin + "' group by fechaVenta;");
+            PreparedStatement pst = cn.prepareStatement("select p.nombre , sum(d.cantidad) as cantidad "
+                    + "from tb_detalle_venta as d, tb_cabecera_venta as c, tb_producto as p "
+                    + "where d.idCabeceraVenta = c.idCabeceraVenta and d.idProducto = p.idProducto and fechaVenta between '" + InterGrafica2.fecha_inicio + "' and '" + InterGrafica2.fecha_fin + "' "
+                    + "group by d.idProducto ORDER BY cantidad DESC;;");
 
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -68,17 +64,18 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
         try {
 
             Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement(""
-                    + "select fechaVenta, count(fechaVenta) as Ventas from tb_cabecera_venta "
-                    + "where fechaVenta BETWEEN '" + InterGrafica.fecha_inicio + "' and '" + InterGrafica.fecha_fin + "' group by fechaVenta;");
+            PreparedStatement pst = cn.prepareStatement("select p.nombre , sum(d.cantidad) as cantidad "
+                    + "from tb_detalle_venta as d, tb_cabecera_venta as c, tb_producto as p "
+                    + "where d.idCabeceraVenta = c.idCabeceraVenta and d.idProducto = p.idProducto and fechaVenta between '" + InterGrafica2.fecha_inicio + "' and '" + InterGrafica2.fecha_fin + "' "
+                    + "group by d.idProducto ORDER BY cantidad DESC;;");
 
             ResultSet rs = pst.executeQuery();
             int contador = 0;
             while (rs.next()) {
 
-                vector_fechaVenta[contador] = rs.getString("fechaVenta");
+                vector_fechaVenta[contador] = rs.getString("nombre");
                 listaFechas.add(vector_fechaVenta[contador]);
-                vector_estatus_cantidad[contador] = rs.getInt("Ventas");
+                vector_estatus_cantidad[contador] = rs.getInt("cantidad");
                 listaCantidad.add(vector_estatus_cantidad[contador]);
                 contador++;
 
@@ -125,7 +122,7 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Historial de Ventas entre Fechas");
+        jLabel1.setText("Historial de Productos mas vendidos");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 430, -1));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 570));
 
@@ -142,15 +139,15 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
     //Metodo que dibuja graficas
     public void paint(Graphics g) {
         super.paint(g);
-        
+
         int mayorVenta = this.MetodoMeyorVenta(listaCantidad);
-        int largo_NuevoIngreso = 0;
+        int largo_nuevoIngreso = 0;
         int parametro1 = 133;
         int parametroFecha = 118;
         int parametro3 = 100;
 
         for (int i = 0; i < listaCantidad.size(); i++) {
-            largo_NuevoIngreso = listaCantidad.get(i) * 400 / mayorVenta;
+            largo_nuevoIngreso = listaCantidad.get(i) * 400 / mayorVenta;
 
             switch (i) {
                 case 0 ->
@@ -171,7 +168,7 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
                     g.setColor(new Color(17, 251, 216)); //celeste
             }
 
-            g.fillRect(100, parametro3, largo_NuevoIngreso, 40);
+            g.fillRect(100, parametro3, largo_nuevoIngreso, 40);
             g.drawString(listaFechas.get(i), 20, parametroFecha);
             g.drawString("Cantidad: " + listaCantidad.get(i), 20, parametro1);
             parametro1 += 50;

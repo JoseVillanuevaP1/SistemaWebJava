@@ -1,7 +1,7 @@
 package vista;
 
 import conexion.Conexion;
-import controlador.Ctrl_Categoria;
+import controlador.Ctrl_Marca;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,17 +9,17 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.Categoria;
+import modelo.Marca;
 
-public class InterGestionarCategoria extends javax.swing.JInternalFrame {
+public class InterGestionarMarca extends javax.swing.JInternalFrame {
 
-    private int idCategoria;
+    private int idMarca;
 
-    public InterGestionarCategoria() {
+    public InterGestionarMarca() {
         initComponents();
         this.setSize(new Dimension(600, 400));
-        this.setTitle("Gestionar Categorias");
-        this.CargarTablaCategoria();
+        this.setTitle("Gestionar Marcas");
+        this.CargarTablaMarca();
     }
 
     @SuppressWarnings("unchecked")
@@ -44,7 +44,7 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Administrar Categorias");
+        jLabel1.setText("Administrar Marcas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -116,15 +116,15 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
         if (!txt_descripcion.getText().isEmpty()) {
-            Categoria categoria = new Categoria();
-            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+            Marca marca = new Marca();
 
-            categoria.setDescription(txt_descripcion.getText().trim());
+            marca.setDescripcion(txt_descripcion.getText().trim());
 
-            if (controlCategoria.actualizar(categoria, idCategoria)) {
+            if (Ctrl_Marca.actualizar(marca, idMarca)) {
                 JOptionPane.showMessageDialog(null, "Categoria Actualizada");
                 txt_descripcion.setText("");
-                this.CargarTablaCategoria();
+                this.CargarTablaMarca();
+                idMarca = 0;
             } else {
                 JOptionPane.showMessageDialog(null, "Error al actualizar Categoria");
             }
@@ -136,21 +136,21 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         if (!txt_descripcion.getText().isEmpty()) {
-            Categoria categoria = new Categoria();
-            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+            Marca marca = new Marca();
 
-            categoria.setDescription(txt_descripcion.getText().trim());
+            marca.setDescripcion(txt_descripcion.getText().trim());
 
-            if (controlCategoria.eliminar(idCategoria)) {
-                JOptionPane.showMessageDialog(null, "Categoria Eliminada");
+            if (Ctrl_Marca.eliminar(idMarca)) {
+                JOptionPane.showMessageDialog(null, "Marca Eliminada");
                 txt_descripcion.setText("");
-                this.CargarTablaCategoria();
+                this.CargarTablaMarca();
+                idMarca = 0;
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar Categoria");
+                JOptionPane.showMessageDialog(null, "Error al eliminar Marca");
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una categoria");
+            JOptionPane.showMessageDialog(null, "Seleccione una Marca");
         }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
@@ -170,19 +170,19 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /*Metodo para mostrar todas las categorias*/
-    private void CargarTablaCategoria() {
+    private void CargarTablaMarca() {
         Connection con = Conexion.conectar();
         DefaultTableModel mode1 = new DefaultTableModel();
-        String sql = "select idCategoria, descripcion, estado from tb_categoria";
+        String sql = "select idMarca, nombre, estado from marca";
         Statement st;
 
         try {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            InterGestionarCategoria.jTable_Categoria = new JTable(mode1);
-            InterGestionarCategoria.jScrollPane1.setViewportView(InterGestionarCategoria.jTable_Categoria);
+            InterGestionarMarca.jTable_Categoria = new JTable(mode1);
+            InterGestionarMarca.jScrollPane1.setViewportView(InterGestionarMarca.jTable_Categoria);
 
-            mode1.addColumn("IdCategoria");
+            mode1.addColumn("IdMarca");
             mode1.addColumn("Descripcion");
             mode1.addColumn("Estado");
 
@@ -196,7 +196,7 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
 
             con.close();
         } catch (SQLException e) {
-            System.out.println("Error al llenar tabla categoria : " + e);
+            System.out.println("Error al llenar tabla Marca : " + e);
         }
 
         jTable_Categoria.addMouseListener(new MouseAdapter() {
@@ -207,25 +207,25 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
                 int columna_point = 0;
 
                 if (fila_point > -1) {
-                    idCategoria = (int) mode1.getValueAt(fila_point, columna_point);
-                    EnviarDatosCategoriaSeleccionada(idCategoria);
+                    idMarca = (int) mode1.getValueAt(fila_point, columna_point);
+                    EnviarDatosCategoriaSeleccionada(idMarca);
                 }
             }
 
         });
     }
 
-    private void EnviarDatosCategoriaSeleccionada(int idCategoria) {
+    private void EnviarDatosCategoriaSeleccionada(int idMarca) {
         try {
             Connection con = Conexion.conectar();
-            PreparedStatement pst = con.prepareStatement("select * from tb_categoria where idCategoria = '" + idCategoria + "'");
+            PreparedStatement pst = con.prepareStatement("select * from marca where idMarca = '" + idMarca + "'");
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                txt_descripcion.setText(rs.getString("descripcion"));
+                txt_descripcion.setText(rs.getString("nombre"));
             }
             con.close();
         } catch (SQLException e) {
-            System.out.println("Error al selecciona Categoria: " + e);
+            System.out.println("Error al selecciona Marca: " + e);
         }
     }
 

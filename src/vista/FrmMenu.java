@@ -82,6 +82,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem_nueva_categoria = new javax.swing.JMenuItem();
         jMenuItem_gestionar_categoria = new javax.swing.JMenuItem();
+        jMenuItem_nueva_marca = new javax.swing.JMenuItem();
+        jMenuItem_gestionar_marca = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem_nueva_venta = new javax.swing.JMenuItem();
         jMenuItem_gestionar_ventas = new javax.swing.JMenuItem();
@@ -92,6 +94,7 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_reportes_ventas = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem_ver_historial = new javax.swing.JMenuItem();
+        jMenuItem_ver_productos = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem_cerrar_sesion = new javax.swing.JMenuItem();
 
@@ -263,6 +266,27 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem_gestionar_categoria);
 
+        jMenuItem_nueva_marca.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenuItem_nueva_marca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar.png"))); // NOI18N
+        jMenuItem_nueva_marca.setText("Nueva Marca");
+        jMenuItem_nueva_marca.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_nueva_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_nueva_marcaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem_nueva_marca);
+
+        jMenuItem_gestionar_marca.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenuItem_gestionar_marca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gestion-del-cambio.png"))); // NOI18N
+        jMenuItem_gestionar_marca.setText("Gestionar Marca");
+        jMenuItem_gestionar_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_marcaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem_gestionar_marca);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carrito.png"))); // NOI18N
@@ -360,6 +384,17 @@ public class FrmMenu extends javax.swing.JFrame {
             }
         });
         jMenu7.add(jMenuItem_ver_historial);
+
+        jMenuItem_ver_productos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenuItem_ver_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/historial1.png"))); // NOI18N
+        jMenuItem_ver_productos.setText("Ver Productos");
+        jMenuItem_ver_productos.setPreferredSize(new java.awt.Dimension(150, 30));
+        jMenuItem_ver_productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ver_productosActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem_ver_productos);
 
         jMenuBar1.add(jMenu7);
 
@@ -494,6 +529,24 @@ public class FrmMenu extends javax.swing.JFrame {
         interGestionarRol.setVisible(true);
     }//GEN-LAST:event_jMenuItem_gestionar_usuario1ActionPerformed
 
+    private void jMenuItem_ver_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ver_productosActionPerformed
+        InterGrafica2 interGraficaProductos = new InterGrafica2();
+        jDesktopPane_menu.add(interGraficaProductos);
+        interGraficaProductos.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_ver_productosActionPerformed
+
+    private void jMenuItem_nueva_marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nueva_marcaActionPerformed
+        InterMarca interMarca = new InterMarca();
+        jDesktopPane_menu.add(interMarca);
+        interMarca.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_nueva_marcaActionPerformed
+
+    private void jMenuItem_gestionar_marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_marcaActionPerformed
+        InterGestionarMarca interGestionarMarca = new InterGestionarMarca();
+        jDesktopPane_menu.add(interGestionarMarca);
+        interGestionarMarca.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_marcaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
@@ -510,11 +563,13 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_cerrar_sesion;
     private javax.swing.JMenuItem jMenuItem_gestionar_categoria;
     private javax.swing.JMenuItem jMenuItem_gestionar_cliente;
+    private javax.swing.JMenuItem jMenuItem_gestionar_marca;
     private javax.swing.JMenuItem jMenuItem_gestionar_producto;
     private javax.swing.JMenuItem jMenuItem_gestionar_usuario;
     private javax.swing.JMenuItem jMenuItem_gestionar_usuario1;
     private javax.swing.JMenuItem jMenuItem_gestionar_ventas;
     private javax.swing.JMenuItem jMenuItem_nueva_categoria;
+    private javax.swing.JMenuItem jMenuItem_nueva_marca;
     private javax.swing.JMenuItem jMenuItem_nueva_venta;
     private javax.swing.JMenuItem jMenuItem_nuevo_cliente;
     private javax.swing.JMenuItem jMenuItem_nuevo_producto;
@@ -525,6 +580,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_reportes_ventas;
     private javax.swing.JMenuItem jMenuItem_roles;
     private javax.swing.JMenuItem jMenuItem_ver_historial;
+    private javax.swing.JMenuItem jMenuItem_ver_productos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel txt_rol;
     // End of variables declaration//GEN-END:variables

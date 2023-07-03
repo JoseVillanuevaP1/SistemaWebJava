@@ -1,17 +1,16 @@
-
 package vista;
 
-import controlador.Ctrl_Categoria;
+import controlador.Ctrl_Marca;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
-import modelo.Categoria;
+import modelo.Marca;
 
-public class InterCategoria extends javax.swing.JInternalFrame {
+public class InterMarca extends javax.swing.JInternalFrame {
 
-    public InterCategoria() {
+    public InterMarca() {
         initComponents();
-        this.setSize(new Dimension(400,200));
-        this.setTitle("Nueva Categoria");
+        this.setSize(new Dimension(400, 200));
+        this.setTitle("Nueva Marca");
     }
 
     @SuppressWarnings("unchecked")
@@ -30,13 +29,14 @@ public class InterCategoria extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nueva Categoria");
+        jLabel1.setText("Nueva Marca");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Descripcion Categoria:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 20));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Descripcion Marca:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 160, 20));
 
         txt_descripcion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txt_descripcion.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -68,7 +68,7 @@ public class InterCategoria extends javax.swing.JInternalFrame {
 
     private void txt_descripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descripcionKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
-           this.registrar();
+            this.registrar();
         }
     }//GEN-LAST:event_txt_descripcionKeyPressed
 
@@ -81,27 +81,28 @@ public class InterCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables
 
-    public void registrar(){
-        Categoria categoria = new Categoria();
+    public void registrar() {
+        Marca marca = new Marca();
         //Validamos campos vacios
         if (txt_descripcion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         } else {
-            if (!Ctrl_Categoria.existe(txt_descripcion.getText().trim())) {
-                categoria.setDescription(txt_descripcion.getText().trim());
-                categoria.setEstado(1);
-                    
-                if (Ctrl_Categoria.guardar(categoria)) {
+            if (!Ctrl_Marca.existe(txt_descripcion.getText().trim())) {
+
+                marca.setDescripcion(txt_descripcion.getText().trim());
+                marca.setEstado(1);
+
+                if (Ctrl_Marca.guardar(marca)) {
                     JOptionPane.showMessageDialog(null, "Registro Guardado.");
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Error al guardar");
                 }
-                    
+
             } else {
-                JOptionPane.showMessageDialog(null, "La categoria ya esta registrada en la base de datos");
+                JOptionPane.showMessageDialog(null, "La marca ya esta registrada en la base de datos");
             }
         }
-        
+
         //limpiar campo
         txt_descripcion.setText("");
     }

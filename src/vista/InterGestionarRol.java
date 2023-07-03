@@ -305,7 +305,7 @@ public class InterGestionarRol extends javax.swing.JInternalFrame {
             TableColumn column = jTable_Roles.getColumnModel().getColumn(1); // Columna "Name"
 
             // Establecer el ancho preferido de la columna
-            column.setPreferredWidth(130);
+            column.setPreferredWidth(150);
 
             
             while (rs.next()) {
