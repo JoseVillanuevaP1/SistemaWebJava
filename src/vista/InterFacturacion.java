@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.CabeceraVenta;
 import modelo.DetalleVenta;
 import java.util.Date;
+import javax.swing.JTextField;
 
 public class InterFacturacion extends javax.swing.JInternalFrame {
 
@@ -153,6 +154,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         txt_cambio = new javax.swing.JTextField();
         jButton_calcularCambio = new javax.swing.JButton();
         jButton_registrar_venta = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -325,6 +327,10 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButton_registrar_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, 170, 100));
+
+        jDateChooser1.setDateFormatString("yyyy/MM/dd");
+        jDateChooser1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 170, -1));
 
         jLabel_wallpaper.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 570));
@@ -541,82 +547,89 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         String fechaActual = "";
 
         Date date = new Date();
-        fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
+        String fechaCampo = ((JTextField) jDateChooser1.getDateEditor().getUiComponent()).getText();
 
         if (!jComboBox_cliente.getSelectedItem().equals("Selecciona Cliente")) {
 
-            if (!listaProductos.isEmpty()) {
+            if (!fechaCampo.isEmpty()) {
 
-                //metodo para obtener el Id del Cliente
-                this.obtenerIdCliente();
+                if (!listaProductos.isEmpty()) {
 
-                //registrar la cabecera
-                cabeceraVenta.setIdCabeceraVenta(0);
-                cabeceraVenta.setIdCliente(idCliente);
-                cabeceraVenta.setValorPagar(Double.parseDouble(txt_total_pagar.getText()));
-                cabeceraVenta.setFechaVenta(fechaActual);
-                cabeceraVenta.setEstado(1);
+                    //metodo para obtener el Id del Cliente
+                    this.obtenerIdCliente();
 
-                if (controlRegistrarVenta.guardarCabecera(cabeceraVenta)) {
+                    //registrar la cabecera
+                    cabeceraVenta.setIdCabeceraVenta(0);
+                    cabeceraVenta.setIdCliente(idCliente);
+                    cabeceraVenta.setValorPagar(Double.parseDouble(txt_total_pagar.getText()));
+                    cabeceraVenta.setFechaVenta(fechaCampo);
+                    cabeceraVenta.setEstado(1);
 
-                    JOptionPane.showMessageDialog(null, "Venta Registrada");
-                    
-                    //Generar Factura de Venta
-                    VentaPDF pdf = new VentaPDF();
-                    pdf.DatosCliente(idCliente);
-                    pdf.ObtenerUltimoIDCabecera();
-                    pdf.generarFacturaVentaPDF();
-                    
-                    
-                    //guardar detalle
-                    for (DetalleVenta elemento : listaProductos) {
+                    if (controlRegistrarVenta.guardarCabecera(cabeceraVenta)) {
 
-                        detalleVenta.setIdDetalleVenta(0);
-                        detalleVenta.setIdCabeceraVenta(0);
-                        detalleVenta.setIdProducto(elemento.getIdProducto());
-                        detalleVenta.setCantidad(elemento.getCantidad());
-                        detalleVenta.setPrecioUnitario(elemento.getPrecioUnitario());
-                        detalleVenta.setSubTotal(elemento.getSubTotal());
-                        detalleVenta.setDescuento(elemento.getDescuento());
-                        detalleVenta.setIgv(elemento.getIgv());
-                        detalleVenta.setTotalPagar(elemento.getTotalPagar());
-                        detalleVenta.setEstado(1);
+                        JOptionPane.showMessageDialog(null, "Venta Registrada");
 
-                        if (controlRegistrarVenta.guardarDetalle(detalleVenta)) {
+                        //Generar Factura de Venta
+                        VentaPDF pdf = new VentaPDF();
+                        pdf.DatosCliente(idCliente);
+                        pdf.ObtenerUltimoIDCabecera();
+                        pdf.generarFacturaVentaPDF();
 
-                            //System.out.println("Detalle de Venta Registrada");
-                            txt_subtotal.setText("0.0");
-                            txt_igv.setText("0.0");
-                            txt_descuento.setText("0.0");
-                            txt_total_pagar.setText("0.0");
-                            txt_efectivo.setText("");
-                            txt_cambio.setText("");
-                            auxIdDetalle = 1;
+                        //guardar detalle
+                        for (DetalleVenta elemento : listaProductos) {
 
-                            this.CargarComboCliente();
-                            this.restarStockProductos(elemento.getIdProducto(), elemento.getCantidad());
+                            detalleVenta.setIdDetalleVenta(0);
+                            detalleVenta.setIdCabeceraVenta(0);
+                            detalleVenta.setIdProducto(elemento.getIdProducto());
+                            detalleVenta.setCantidad(elemento.getCantidad());
+                            detalleVenta.setPrecioUnitario(elemento.getPrecioUnitario());
+                            detalleVenta.setSubTotal(elemento.getSubTotal());
+                            detalleVenta.setDescuento(elemento.getDescuento());
+                            detalleVenta.setIgv(elemento.getIgv());
+                            detalleVenta.setTotalPagar(elemento.getTotalPagar());
+                            detalleVenta.setEstado(1);
 
-                        } else {
+                            if (controlRegistrarVenta.guardarDetalle(detalleVenta)) {
 
-                            JOptionPane.showMessageDialog(null, "Error al guardar Detalle de Venta");
+                                //System.out.println("Detalle de Venta Registrada");
+                                txt_subtotal.setText("0.0");
+                                txt_igv.setText("0.0");
+                                txt_descuento.setText("0.0");
+                                txt_total_pagar.setText("0.0");
+                                txt_efectivo.setText("");
+                                txt_cambio.setText("");
+                                auxIdDetalle = 1;
+
+                                this.CargarComboCliente();
+                                this.restarStockProductos(elemento.getIdProducto(), elemento.getCantidad());
+
+                            } else {
+
+                                JOptionPane.showMessageDialog(null, "Error al guardar Detalle de Venta");
+
+                            }
 
                         }
 
-                    }
+                        listaProductos.clear();
+                        this.listarTablaProductos();
 
-                    listaProductos.clear();
-                    this.listarTablaProductos();
+                    } else {
+
+                        JOptionPane.showMessageDialog(null, "Error al guardar Cabecera de Venta");
+
+                    }
 
                 } else {
 
-                    JOptionPane.showMessageDialog(null, "Error al guardar Cabecera de Venta");
+                    JOptionPane.showMessageDialog(null, "Seleccione un Producto");
 
                 }
 
             } else {
-
-                JOptionPane.showMessageDialog(null, "Seleccione un Producto");
-
+                
+                 JOptionPane.showMessageDialog(null, "Selecciona fecha");
+                
             }
 
         } else {
@@ -634,6 +647,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_registrar_venta;
     private javax.swing.JComboBox<String> jComboBox_cliente;
     private javax.swing.JComboBox<String> jComboBox_producto;
+    public static com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -849,17 +863,17 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         }
 
         try {
-            
+
             Connection cn = Conexion.conectar();
             PreparedStatement consulta = cn.prepareStatement("update tb_producto set cantidad = ? where idProducto = '" + idProducto + "'");
-            
+
             int cantidadNueva = cantidadProductosBD - cantidad;
             consulta.setInt(1, cantidadNueva);
-            
+
             if (consulta.executeUpdate() > 0) {
                 //System.out.println("Stock Actualizado Correctamente");
             }
-            
+
         } catch (SQLException e) {
             System.out.println("Error al Restar Cantidad 2 del Stock, en : " + e);
         }

@@ -14,7 +14,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import modelo.Producto;
-import static vista.InterGestionarRol.jTable_Roles;
 
 public class InterGestionarProducto extends javax.swing.JInternalFrame {
 

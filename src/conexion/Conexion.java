@@ -20,9 +20,7 @@ public class Conexion {
             Class.forName(DB_Driver);
             cn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             
-        } catch (Exception e) {
-            e.printStackTrace();
-            
+        } catch (ClassNotFoundException | SQLException e) {
         }
         return cn;
     }
