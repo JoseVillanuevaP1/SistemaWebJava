@@ -59,6 +59,10 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         //cargar los productos en el jcombobox
         this.CargarComboProducto();
 
+        Date date = new Date();
+        String fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
+        ((JTextField) jDateChooser1.getDateEditor().getUiComponent()).setText(fechaActual);
+        
         //inicializarTabla;
         iniciarlizarTablaProductos();
 
@@ -329,6 +333,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         getContentPane().add(jButton_registrar_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, 170, 100));
 
         jDateChooser1.setDateFormatString("yyyy/MM/dd");
+        jDateChooser1.setEnabled(false);
         jDateChooser1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 170, -1));
 

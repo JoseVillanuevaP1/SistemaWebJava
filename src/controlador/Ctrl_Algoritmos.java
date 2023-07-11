@@ -1,63 +1,64 @@
 package controlador;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 public class Ctrl_Algoritmos {
 
-    public static boolean busquedaSecuencial(ArrayList<Integer> lista, int elemento) {
+    public static int busquedaSecuencial(List<String> lista, String elemento) {
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i) == elemento) {
-                return true; // Se encontró el elemento en la lista
+            if (lista.get(i).equals(elemento)) {
+                return i; // Se encontró el elemento, se devuelve el índice
             }
         }
-        return false; // No se encontró el elemento en la lista
+        return -1; // No se encontró el elemento en la lista
     }
 
-    public static void radixSort(ArrayList<Character> lista) {
-        if (lista == null || lista.isEmpty()) {
-            return;
-        }
+// Función de ordenamiento Radix para cadenas de caracteres
+    public static void radixSort(List<Object[]> filas, int columna) {
+        int n = filas.size();
+        int maxLen = getMaxStringLength(filas, columna);
 
-        // Obtener el valor máximo en la lista para determinar el número de dígitos
-        int max = Collections.max(lista);
-
-        // Realizar el ordenamiento Radix
-        for (int exp = 1; max / exp > 0; exp *= 10) {
-            countingSort(lista, exp);
+        for (int i = maxLen - 1; i >= 0; i--) {
+            countingSort(filas, columna, i);
         }
     }
 
-    private static void countingSort(ArrayList<Character> lista, int exp) {
-        int n = lista.size();
-        ArrayList<Character> output = new ArrayList<>(n);
-        int[] count = new int[256]; // Rango de caracteres
-        Arrays.fill(count, 0);
+    // Función auxiliar para obtener la longitud máxima de cadena en una columna
+    private static int getMaxStringLength(List<Object[]> filas, int columna) {
+        int maxLen = 0;
+        for (Object[] fila : filas) {
+            String descripcion = (String) fila[columna];
+            maxLen = Math.max(maxLen, descripcion.length());
+        }
+        return maxLen;
+    }
 
-        // Contar la frecuencia de cada dígito en la lista
-        for (int i = 0; i < n; i++) {
-            char ch = lista.get(i);
-            int digit = (int) ch / exp % 10;
-            count[digit]++;
+    // Función auxiliar para realizar el ordenamiento por cuenta en una posición específica
+    private static void countingSort(List<Object[]> filas, int columna, int pos) {
+        int n = filas.size();
+        int[] count = new int[256];
+        Object[] output = new Object[n];
+
+        for (Object[] fila : filas) {
+            String descripcion = (String) fila[columna];
+            int index = (pos < descripcion.length()) ? descripcion.charAt(descripcion.length() - pos - 1) : 0;
+            count[index]++;
         }
 
-        // Calcular las posiciones finales de cada dígito en la lista ordenada
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 256; i++) {
             count[i] += count[i - 1];
         }
 
-        // Construir la lista ordenada
         for (int i = n - 1; i >= 0; i--) {
-            char caracter = lista.get(i);
-            int digit = (int) caracter / exp % 10;
-            output.set(count[digit] - 1, caracter);
-            count[digit]--;
+            Object[] fila = filas.get(i);
+            String descripcion = (String) fila[columna];
+            int index = (pos < descripcion.length()) ? descripcion.charAt(descripcion.length() - pos - 1) : 0;
+            output[count[index] - 1] = fila;
+            count[index]--;
         }
 
-        // Actualizar la lista original con la lista ordenada
         for (int i = 0; i < n; i++) {
-            lista.set(i, output.get(i));
+            filas.set(i, (Object[]) output[i]);
         }
     }
 }
